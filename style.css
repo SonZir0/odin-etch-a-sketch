@@ -27,6 +27,9 @@ main {
 }
 
 .grid {
+    display: flex;
+    flex-wrap: wrap;
+    
     border: double 5px black;
     background-color: lightyellow;
 }
