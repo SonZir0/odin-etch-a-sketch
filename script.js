@@ -32,19 +32,34 @@ function initGrid(size = 16) {
 
     let newDivDimensions = actualGridLength/size;
     let newDiv;
-    for(let i = 0; i < size*size; i++) {
+    for(let i = 1; i <= size*size; i++) {
         newDiv = document.createElement('div');
         newDiv.style.height = newDiv.style.width = newDivDimensions + "px";
-        newDiv.style.backgroundColor = "azure";
-        newDiv.style.border = "solid 1px lightgray";
+        newDiv.classList.add('cell');
+        newDiv.classList.add(`${i}`);
         grid.appendChild(newDiv);
     }
 }
 
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
+let mouseDown = false;
+document.body.onmousedown = () => mouseDown = true;
+document.body.onmouseup = () => mouseDown = false;
 setGridSizeOnLoad();
-initGrid();
+initGrid(100);
+
+let grid = document.querySelector('.grid');
+grid.addEventListener('mouseover', (event) => {
+    if (event.type === 'mouseover' && !mouseDown) return 0;
+
+    let cell = event.target;
+    if(cell.classList[0] !== "cell")
+        return 0;
+
+    cell.style.backgroundColor = "black";
+    console.log(cell);
+});
 /*
 let body = document.querySelector('body');
 body.style.width = "";
