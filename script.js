@@ -60,6 +60,10 @@ grid.addEventListener('mouseover', (event) => {
     cell.style.backgroundColor = "black";
     console.log(cell);
 });
+
+//Fix to prevent drag on .grid and smaller divs
+grid.addEventListener('mousedown', (event) => event.preventDefault());
+
 /*
 let body = document.querySelector('body');
 body.style.width = "";
