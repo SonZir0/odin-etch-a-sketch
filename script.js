@@ -44,10 +44,10 @@ function initGrid(size = 16) {
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
-document.body.onmousedown = () => mouseDown = true;
-document.body.onmouseup = () => mouseDown = false;
+document.body.addEventListener('mousedown',  () => mouseDown = true);
+document.body.addEventListener('mouseup', () => mouseDown = false);
 setGridSizeOnLoad();
-initGrid(100);
+initGrid();
 
 let grid = document.querySelector('.grid');
 grid.addEventListener('mouseover', (event) => {
