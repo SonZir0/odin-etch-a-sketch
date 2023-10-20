@@ -4,7 +4,6 @@ const POSSIBLE_COLORS = 16777215; // possible colors from 000000h to FFFFFFh
    inside viewport without any mouse scrolling  */
 function setGridSizeOnLoad() {
     let main = document.querySelector('main');
-
     // get height and width available for drawing
     let height = main.clientHeight +
         parseFloat(window.getComputedStyle(main).marginTop) +
@@ -33,9 +32,9 @@ function setGridSizeOnLoad() {
 }
 
 function initGrid(size = 16) {
-    let newDivDimensions = actualGridLength/size;
+    let newDivDimensions = actualGridLength / size;
     let newDiv;
-    for(let i = 1; i <= size**2; i++) {
+    for (let i = 1; i <= size ** 2; i++) {
         newDiv = document.createElement('div');
         newDiv.style.height = newDiv.style.width = newDivDimensions + "px";
         newDiv.classList.add('cell');
@@ -47,49 +46,69 @@ function initGrid(size = 16) {
 function removeGrid() {
     let childList = grid.children;
     console.log(childList);
-    Array.from(childList).forEach( (child) => {
+    Array.from(childList).forEach((child) => {
         grid.removeChild(child);
     });
 }
 
 function randomColor() {
     let newColor = (Math.floor(Math.random() * POSSIBLE_COLORS)).toString(16);
-    while(newColor.length < 6)
+    while (newColor.length < 6)
         newColor = "0" + newColor;
-    
-    nextColor = "#" + newColor;
-    sample.style.backgroundColor = nextColor;
+
+    currentColor = "#" + newColor;
+    sample.style.backgroundColor = currentColor;
 }
 
 function draw(event) {
     if (event.type === 'mouseover' && !mouseDown)
-     return 0;
-
-    let cell = event.target;
-    if(cell.classList[0] !== "cell")
         return 0;
 
-    console.log(nextColor);
-    cell.style.backgroundColor = nextColor;
-    
-    if (colorRandBtn.classList[1] !== undefined) {
-        randomColor();
+    let cell = event.target;
+    if (cell.classList[0] !== "cell")
+        return 0;
+
+    if (moreOpacity.classList[1] !== undefined) {
+        let temp = window.getComputedStyle(cell).getPropertyValue("opacity");
+        cell.style.opacity = temp - 0.1;
+        console.log(temp);
+        return 0;
     }
+
+    if (lessOpacity.classList[1] !== undefined) {
+        let temp = window.getComputedStyle(cell).getPropertyValue("opacity");
+        cell.style.opacity = +temp + 0.1;
+        return 0;
+    }
+
+    cell.style.backgroundColor = currentColor;
+    if (colorRandBtn.classList[1] !== undefined)
+        randomColor();
 }
+
+function highlightNewBtn(pressedBtn) {
+    let highlighted = document.querySelector(".highlight");
+    if (highlighted !== null)
+        highlighted.classList.remove("highlight");
+    pressedBtn.classList.add("highlight");
+}
+
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
+let currentColor = "black";
 let interface = document.querySelector('.interface');
 let grid = document.querySelector('.grid');
-let nextColor = "black";
 let sample = document.querySelector('.sample');
 let colorBlackBtn = document.querySelector('.black');
 let colorRandBtn = document.querySelector('.random');
 let eraserBtn = document.querySelector('.eraser');
+let moreOpacity = document.querySelector('.more');
+let lessOpacity = document.querySelector('.less');
 let sizeValue = document.querySelector('#sizeValue');
 let applyBtn = document.querySelector('.apply');
 
-document.body.addEventListener('mousedown',  () => mouseDown = true);
+document.body.addEventListener('mousedown', () => mouseDown = true);
 document.body.addEventListener('mouseup', () => mouseDown = false);
 setGridSizeOnLoad();
 initGrid();
@@ -100,32 +119,28 @@ grid.addEventListener('mouseover', draw);
 grid.addEventListener('mousedown', draw);
 
 colorBlackBtn.addEventListener('click', () => {
-    nextColor = "black";
-    sample.style.backgroundColor = nextColor;
-
-    let temp = document.querySelector(".highlight");
-    if (temp !== null)
-        temp.classList.remove("highlight");
-    colorBlackBtn.classList.add("highlight");
+    currentColor = "black";
+    sample.style.backgroundColor = currentColor;
+    highlightNewBtn(colorBlackBtn);
 });
 
 colorRandBtn.addEventListener('click', () => {
     randomColor();
-
-    let temp = document.querySelector(".highlight");
-    if (temp !== null)
-        temp.classList.remove("highlight");
-    colorRandBtn.classList.add("highlight");
+    highlightNewBtn(colorRandBtn);
 });
 
 eraserBtn.addEventListener('click', () => {
-    nextColor = "white";
-    sample.style.backgroundColor = nextColor;
+    currentColor = "white";
+    sample.style.backgroundColor = currentColor;
+    highlightNewBtn(eraserBtn);
+});
 
-    let temp = document.querySelector(".highlight");
-    if (temp !== null)
-        temp.classList.remove("highlight");
-    eraserBtn.classList.add("highlight");
+moreOpacity.addEventListener('click', () => {
+    highlightNewBtn(moreOpacity);
+});
+
+lessOpacity.addEventListener('click', () => {
+    highlightNewBtn(lessOpacity);
 });
 
 sizeValue.addEventListener('input', (event) => {
