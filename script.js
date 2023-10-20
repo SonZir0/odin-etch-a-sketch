@@ -41,6 +41,15 @@ function initGrid(size = 16) {
     }
 }
 
+function drawByDrag(event) {
+    if (event.type === 'mouseover' && !mouseDown) return 0;
+
+    let cell = event.target;
+    if(cell.classList[0] !== "cell")
+        return 0;
+
+    cell.style.backgroundColor = "black";
+}
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
@@ -50,23 +59,14 @@ setGridSizeOnLoad();
 initGrid();
 
 let grid = document.querySelector('.grid');
-grid.addEventListener('mouseover', (event) => {
-    if (event.type === 'mouseover' && !mouseDown) return 0;
-
-    let cell = event.target;
-    if(cell.classList[0] !== "cell")
-        return 0;
-
-    cell.style.backgroundColor = "black";
-    console.log(cell);
-});
+grid.addEventListener('mouseover', drawByDrag);
+grid.addEventListener('mousedown', drawByDrag);
 
 //Fix to prevent drag on .grid and smaller divs
 grid.addEventListener('mousedown', (event) => event.preventDefault());
 
-/*
-let body = document.querySelector('body');
-body.style.width = "";
-body.style.height = "";
-main.style.margin = "0px";
-*/
+let slider = document.querySelector('.slider');
+let inputValue = document.querySelector('.inputValue')
+slider.addEventListener('input', (event) => {
+    inputValue.textContent = event.target.value;
+});
