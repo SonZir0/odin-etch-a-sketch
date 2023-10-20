@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Etch A Scetch</title>
 
-        <link rel="stylesheet" href="style.css">
-        <script src="script.js" defer></script>
-    </head>
+<head>
+    <meta charset="utf-8">
+    <title>Etch A Scetch</title>
 
-    <body>
-        <h1>Etch a Sketch!</h1>
-        <main>
-            <div class="interface">
-                <ul>
-                    <li class="colorControls">
-                        <div>black</div>
-                        <div>rainbow</div>
-                        <div>eraser</div>
-                    </li>
-                    <li class="brightnessControls">
-                        <div>darken</div>
-                        <div>brighten</div>
-                    </li>
-                    <li class="sizeControls">
-                        <label>Grid dimensions: </label>
-                        <input class="inputValue" type="number" min="1" max="100"></var>
-                        <button class="apply">Apply</button>
-                    </li>
-                </ul>
-            </div>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
 
-            <div class="grid">
-            </div>
-        </main>
-        <footer>Made by yours truly, sonziro</footer>
-    </body>
+<body>
+    <h1>Etch a Sketch!</h1>
+    <main>
+        <div class="interface">
+            <ul>
+                <li class="colorPanel">
+                    <span>Pick your color:</span>
+                    <div class="colorControls">
+                        <button>Black</button>
+                        <button>Custom</button>
+                        <button>Random</button>
+                        <button>Eraser</button>
+                    </div>
+                </li>
+                <li class="brightnessPanel">
+                    <span>Adjust brightness</span>
+                    <div class="brightnessControls">
+                        <button>Darken</button>
+                        <button>Brighten</button>
+                    </div>
+                </li>
+                <li class="sizePanel">
+                    <label>Grid dimensions:
+                        <input id="inputValue" type="number" min="1" max="100">
+                    </label>
+                    <button class="apply">New Sketch</button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="grid">
+        </div>
+    </main>
+    <footer>Made by yours truly, sonziro</footer>
+</body>
+
 </html>

@@ -1,3 +1,5 @@
+/* purpose of this funcешщт is to try and fit interface and grid
+   inside viewport without any mouse scrolling  */
 function setGridSizeOnLoad() {
     let main = document.querySelector('main');
 
@@ -12,6 +14,9 @@ function setGridSizeOnLoad() {
 
     // our grid is supposed to be a square, so we're taking the minimum value
     let gridLength = Math.floor(Math.min(height, width));
+    // assign lenght to a panel above, flexbox'll decide on height
+    interface.style.width = gridLength + "px";
+    gridLength -= parseInt(window.getComputedStyle(interface).height);
 
     // take a bit (10 + whatever) of lenght for a gap between the border and
     // new divs save "actual" width/height for later (to not compute later)
@@ -57,6 +62,7 @@ function drawByDrag(event) {
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
+let interface = document.querySelector('.interface');
 let grid = document.querySelector('.grid');
 
 document.body.addEventListener('mousedown',  () => mouseDown = true);
@@ -70,7 +76,7 @@ grid.addEventListener('mousedown', drawByDrag);
 //Prevent drag on .grid and smaller divs
 grid.addEventListener('mousedown', (event) => event.preventDefault());
 
-let inputValue = document.querySelector('.inputValue');
+let inputValue = document.querySelector('#inputValue');
 let applyBtn = document.querySelector('.apply');
 inputValue.value = 16;
 

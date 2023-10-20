@@ -10,6 +10,7 @@ html {
 body {
     display: flex;
     flex-direction: column;
+    text-align: center;
 
     margin: 0px;
     height: 100%;
@@ -17,7 +18,6 @@ body {
 }
 
 h1 {
-    text-align: center;
     font-size: 40px;
     margin-top: 10px;
 }
@@ -29,30 +29,71 @@ main {
 .interface {
     margin-bottom: 4px;
     border: solid 3px black;
+    font-size: 18px;
 }
 
 ul {
-    margin: 8px 0px;
-    padding: 0px;
+    margin: 0px;
+    padding: 10px;
     list-style-type: none;
 
     display: flex;
     justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 3em;
+    gap: 2em;
 }
 
-.sizeControls {
-    flex: 0 1 30%;
+.colorPanel {
+    flex: 0 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.colorControls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.colorPanel button {
+    flex: 1 1 0;
+    padding: 5px;
+    border-radius: 16px;
+    font-size: 18px;
+}
+
+.brightnessPanel {
+    flex: 0 1 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.brightnessControls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.brightnessControls button {
+    flex: 1 1 0;
+    padding: 5px;
+    border-radius: 16px;
+    font-size: 18px;
+}
+
+.sizePanel {
+    flex: 0 1 260px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 8px;
-
-    font-size: 20px;
 }
 
-.inputValue {
+#inputValue {
     margin: 0px auto;
     text-align: center;
     font-size: 15px;
@@ -69,6 +110,7 @@ ul {
     display: flex;
     flex-wrap: wrap;
 
+    margin: auto;
     border: double 5px black;
     background-color: lightyellow;
 }
