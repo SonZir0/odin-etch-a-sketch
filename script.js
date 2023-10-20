@@ -112,6 +112,7 @@ document.body.addEventListener('mousedown', () => mouseDown = true);
 document.body.addEventListener('mouseup', () => mouseDown = false);
 setGridSizeOnLoad();
 initGrid();
+highlightNewBtn(colorBlackBtn);
 
 //Prevent drag on .grid and smaller divs
 grid.addEventListener('mousedown', (event) => event.preventDefault());
