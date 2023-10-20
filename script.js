@@ -1,4 +1,6 @@
-/* purpose of this funcешщт is to try and fit interface and grid
+const POSSIBLE_COLORS = 16777215; // possible colors from 000000h to FFFFFFh
+
+/* purpose of this function is to try and fit interface and grid
    inside viewport without any mouse scrolling  */
 function setGridSizeOnLoad() {
     let main = document.querySelector('main');
@@ -33,7 +35,7 @@ function setGridSizeOnLoad() {
 function initGrid(size = 16) {
     let newDivDimensions = actualGridLength/size;
     let newDiv;
-    for(let i = 1; i <= size*size; i++) {
+    for(let i = 1; i <= size**2; i++) {
         newDiv = document.createElement('div');
         newDiv.style.height = newDiv.style.width = newDivDimensions + "px";
         newDiv.classList.add('cell');
@@ -50,44 +52,82 @@ function removeGrid() {
     });
 }
 
-function drawByDrag(event) {
-    if (event.type === 'mouseover' && !mouseDown) return 0;
+function randomColor() {
+    let newColor = (Math.floor(Math.random() * POSSIBLE_COLORS)).toString(16);
+    return "#" + newColor;
+}
+
+function draw(event) {
+    if (event.type === 'mouseover' && !mouseDown)
+     return 0;
 
     let cell = event.target;
     if(cell.classList[0] !== "cell")
         return 0;
 
-    cell.style.backgroundColor = "black";
+    cell.style.backgroundColor = nextColor;
 }
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
 let interface = document.querySelector('.interface');
 let grid = document.querySelector('.grid');
+let nextColor = "black";
+let sample = document.querySelector('.sample');
+let colorBlackBtn = document.querySelector('.black');
+let colorRandBtn = document.querySelector('.random');
+let eraserBtn = document.querySelector('.eraser');
+let sizeValue = document.querySelector('#sizeValue');
+let applyBtn = document.querySelector('.apply');
 
 document.body.addEventListener('mousedown',  () => mouseDown = true);
 document.body.addEventListener('mouseup', () => mouseDown = false);
 setGridSizeOnLoad();
 initGrid();
 
-grid.addEventListener('mouseover', drawByDrag);
-grid.addEventListener('mousedown', drawByDrag);
-
 //Prevent drag on .grid and smaller divs
 grid.addEventListener('mousedown', (event) => event.preventDefault());
+grid.addEventListener('mouseover', draw);
+grid.addEventListener('mousedown', draw);
 
-let inputValue = document.querySelector('#inputValue');
-let applyBtn = document.querySelector('.apply');
-inputValue.value = 16;
+colorBlackBtn.addEventListener('click', () => {
+    nextColor = "black";
+    sample.style.backgroundColor = nextColor;
 
-inputValue.addEventListener('input', (event) => {
-    if (inputValue.value < 1)
-        inputValue.value = 1;
-    if (inputValue.value > 100)
-        inputValue.value = 100;
+    let temp = document.querySelector(".highlight");
+    if (temp !== null)
+        temp.classList.remove("highlight");
+    colorBlackBtn.classList.add("highlight");
+});
+
+colorRandBtn.addEventListener('click', () => {
+    nextColor = randomColor();
+    sample.style.backgroundColor = nextColor;
+
+    let temp = document.querySelector(".highlight");
+    if (temp !== null)
+        temp.classList.remove("highlight");
+    colorRandBtn.classList.add("highlight");
+});
+
+eraserBtn.addEventListener('click', () => {
+    nextColor = "white";
+    sample.style.backgroundColor = nextColor;
+
+    let temp = document.querySelector(".highlight");
+    if (temp !== null)
+        temp.classList.remove("highlight");
+    eraserBtn.classList.add("highlight");
+});
+
+sizeValue.addEventListener('input', (event) => {
+    if (sizeValue.value < 1)
+        sizeValue.value = 1;
+    if (sizeValue.value > 100)
+        sizeValue.value = 100;
 });
 
 applyBtn.addEventListener('click', () => {
     removeGrid();
-    initGrid(inputValue.value);
+    initGrid(sizeValue.value);
 });

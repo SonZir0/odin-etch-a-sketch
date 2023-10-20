@@ -50,6 +50,13 @@ ul {
     gap: 10px;
 }
 
+.sample {
+    height: 50px;
+    width: 50px;
+    background-color: black;
+    border: 2px dashed black;
+}
+
 .colorControls {
     display: flex;
     flex-wrap: wrap;
@@ -93,7 +100,7 @@ ul {
     gap: 8px;
 }
 
-#inputValue {
+#sizeValue {
     margin: 0px auto;
     text-align: center;
     font-size: 15px;
@@ -112,12 +119,16 @@ ul {
 
     margin: auto;
     border: double 5px black;
-    background-color: lightyellow;
+    background-color: azure;
 }
 
 .cell {
-    background-color: azure;
+    background-color: white;
     border: solid 1px lightgray;
+}
+
+button {
+    background-color: white;
 }
 
 footer {
@@ -128,4 +139,9 @@ footer {
     text-align: center;
     font-size: 20px;
     background-color: lightgray;
+}
+
+.highlight {
+    background-color: blue;
+    color: white;
 }
