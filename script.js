@@ -54,7 +54,11 @@ function removeGrid() {
 
 function randomColor() {
     let newColor = (Math.floor(Math.random() * POSSIBLE_COLORS)).toString(16);
-    return "#" + newColor;
+    while(newColor.length < 6)
+        newColor = "0" + newColor;
+    
+    nextColor = "#" + newColor;
+    sample.style.backgroundColor = nextColor;
 }
 
 function draw(event) {
@@ -65,7 +69,12 @@ function draw(event) {
     if(cell.classList[0] !== "cell")
         return 0;
 
+    console.log(nextColor);
     cell.style.backgroundColor = nextColor;
+    
+    if (colorRandBtn.classList[1] !== undefined) {
+        randomColor();
+    }
 }
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
@@ -101,8 +110,7 @@ colorBlackBtn.addEventListener('click', () => {
 });
 
 colorRandBtn.addEventListener('click', () => {
-    nextColor = randomColor();
-    sample.style.backgroundColor = nextColor;
+    randomColor();
 
     let temp = document.querySelector(".highlight");
     if (temp !== null)
