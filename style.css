@@ -23,7 +23,46 @@ h1 {
 }
 
 main {
-    margin: auto;
+    margin: 0px auto auto auto;
+}
+
+.interface {
+    margin-bottom: 4px;
+    border: solid 3px black;
+}
+
+ul {
+    margin: 8px 0px;
+    padding: 0px;
+    list-style-type: none;
+
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 3em;
+}
+
+.sizeControls {
+    flex: 0 1 30%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+
+    font-size: 20px;
+}
+
+.inputValue {
+    margin: 0px auto;
+    text-align: center;
+    font-size: 15px;
+}
+
+.apply {
+    flex: auto;
+    padding: 5px;
+    border-radius: 16px;
+    font-size: 18px;
 }
 
 .grid {

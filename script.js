@@ -1,6 +1,5 @@
 function setGridSizeOnLoad() {
     let main = document.querySelector('main');
-    let grid = document.querySelector('.grid');
 
     // get height and width available for drawing
     let height = main.clientHeight +
@@ -27,9 +26,6 @@ function setGridSizeOnLoad() {
 }
 
 function initGrid(size = 16) {
-    let grid = document.querySelector('.grid');
-    console.log(actualGridLength);
-
     let newDivDimensions = actualGridLength/size;
     let newDiv;
     for(let i = 1; i <= size*size; i++) {
@@ -39,6 +35,14 @@ function initGrid(size = 16) {
         newDiv.classList.add(`${i}`);
         grid.appendChild(newDiv);
     }
+}
+
+function removeGrid() {
+    let childList = grid.children;
+    console.log(childList);
+    Array.from(childList).forEach( (child) => {
+        grid.removeChild(child);
+    });
 }
 
 function drawByDrag(event) {
@@ -53,20 +57,31 @@ function drawByDrag(event) {
 //actualGridLength is gridLength without margin, border and padding. For new divs
 let actualGridLength;
 let mouseDown = false;
+let grid = document.querySelector('.grid');
+
 document.body.addEventListener('mousedown',  () => mouseDown = true);
 document.body.addEventListener('mouseup', () => mouseDown = false);
 setGridSizeOnLoad();
 initGrid();
 
-let grid = document.querySelector('.grid');
 grid.addEventListener('mouseover', drawByDrag);
 grid.addEventListener('mousedown', drawByDrag);
 
-//Fix to prevent drag on .grid and smaller divs
+//Prevent drag on .grid and smaller divs
 grid.addEventListener('mousedown', (event) => event.preventDefault());
 
-let slider = document.querySelector('.slider');
-let inputValue = document.querySelector('.inputValue')
-slider.addEventListener('input', (event) => {
-    inputValue.textContent = event.target.value;
+let inputValue = document.querySelector('.inputValue');
+let applyBtn = document.querySelector('.apply');
+inputValue.value = 16;
+
+inputValue.addEventListener('input', (event) => {
+    if (inputValue.value < 1)
+        inputValue.value = 1;
+    if (inputValue.value > 100)
+        inputValue.value = 100;
+});
+
+applyBtn.addEventListener('click', () => {
+    removeGrid();
+    initGrid(inputValue.value);
 });
